@@ -1,1 +1,1 @@
-# ninasrocks
+Cliend side and server side application based on react and node.js.
