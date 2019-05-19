@@ -1,0 +1,27 @@
+{
+  "name": "ninasrocks",
+  "version": "1.0.0",
+  "description": "Cliend side and server side application based on react and node.js.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GeorgeCrisan/ninasrocks.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GeorgeCrisan/ninasrocks/issues"
+  },
+  "homepage": "https://github.com/GeorgeCrisan/ninasrocks#readme",
+  "dependencies": {
+    "@hapi/hapi": "^18.3.1",
+    "@hapi/joi": "^15.0.3",
+    "hapi-router": "^5.0.0",
+    "mongoose": "^5.5.9"
+  }
+}
