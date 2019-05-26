@@ -1,27 +1,25 @@
-const Hapi = require('@hapi/hapi');
-const Mongoose = require("mongoose");
-const Hapirouter = require("hapi-router");
-const Joi = require("@hapi/joi");
+//Request modules
+const express = require("express");
+const cors = require("cors");
+const bodyParser = require("body-parser");
+const eventLog = require("morgan");
+const handleError = require("./serverfiles/handleError");
 
-const init = async () => {
-    const server = new Hapi.Server({host: "localhost", port: 5000 });
+//Init app
+const app = express();
 
-    try {
-        await server.register({
-          plugin: Hapirouter,
-          options: {
-            routes: 'serverfiles/routes/*.js' // uses glob to include files
-          }
-        })
-      } catch (err) {
-        // Handle err
-        throw err
-      }
-   
-    await server.start();
+//App Settings
+require('dotenv').config();
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(cors());
+app.use(eventLog('dev'));
 
-    console.log('Server running on %ss', server.info.uri);
-}
+//Handle errors
+app.use(handleError);
 
-
-init();
+//Set up server
+const port = process.env.NODE_ENV === 'production' ? 80 : process.env.PORT;
+const server = app.listen(port, ()=> {
+  console.log(`Server running on port  ${port}` );
+});
