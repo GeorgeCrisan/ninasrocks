@@ -24,9 +24,14 @@
     "cors": "^2.8.5",
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
+    "express-session": "^1.16.1",
     "hapi-router": "^5.0.0",
     "helmet": "^3.18.0",
-    "mongoose": "^5.5.9",
-    "morgan": "^1.9.1"
+    "mongoose": "^5.5.11",
+    "morgan": "^1.9.1",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1"
   }
 }
