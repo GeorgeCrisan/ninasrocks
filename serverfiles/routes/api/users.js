@@ -53,6 +53,7 @@ router.post('/users/login', function(req, res, next){
 
     if(user){
       user.token = user.generateJWT();
+      res.cookie('jwt', user.token , { httpOnly: true, secure: true });
       return res.json({user: user.toAuthJSON()});
     } else {
       return res.status(422).json(info);
@@ -60,7 +61,7 @@ router.post('/users/login', function(req, res, next){
   })(req, res, next);
 });
 
-router.post('/users', function(req, res, next){
+router.post('/user/register', function(req, res, next){
   var user = new User();
 
   user.username = req.body.user.username;
@@ -68,6 +69,7 @@ router.post('/users', function(req, res, next){
   user.setPassword(req.body.user.password);
 
   user.save().then(function(){
+    res.cookie('jwt', user.token , { httpOnly: true, secure: true });
     return res.json({user: user.toAuthJSON()});
   }).catch(next);
 });

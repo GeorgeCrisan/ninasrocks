@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const mongoose = require('mongoose');
 const eventLog = require("morgan");
 const path = require('path');
+const passport = require('passport');
 const helmet = require('helmet');
 const session = require('express-session');
 const customErrors = require("./serverfiles/customErrors");
@@ -27,7 +28,6 @@ app.use(helmet());
 app.use(express.static(__dirname + '/public'));
 
 app.use(session({ secret: 'ifyouwantitwemakeitsecret' , cookie: {maxAge: 60000 }, resave: false, saveUninitialized: false }));
-
 // routesm models and passport config
 
 require('./serverfiles/models/User');
