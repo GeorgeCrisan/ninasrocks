@@ -19,6 +19,9 @@ app.use(bodyParser.json());
 app.use(cors()); 
 app.use(eventLog('dev')); 
 app.use(require('method-override')());
+app.disable('x-powered-by');
+app.use(helmet());
+
 
 //use react application as static
 app.use(express.static(__dirname + '/public'));
@@ -31,9 +34,7 @@ require('./serverfiles/models/User');
 
 require('./serverfiles/passportconfig');
 
-require('./serverfiles/routes');
-
-
+app.use(require('./serverfiles/routes'));
 //Handle errors
 
 /// catch 404 and forward to error handler
