@@ -45,7 +45,7 @@ UserSchema.methods.toAuthJSON = function(){
         token: this.generateJWT(),
         bio: this.bio,
         image: this.image,
-        groupPermision: this.groupPermisions
+        groupPermisions: this.groupPermisions
     }
 }
 

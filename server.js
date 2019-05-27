@@ -2,6 +2,7 @@
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const mongoose = require('mongoose');
 const eventLog = require("morgan");
 const path = require('path');
 const helmet = require('helmet');
@@ -17,6 +18,21 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors()); 
 app.use(eventLog('dev')); 
+app.use(require('method-override')());
+
+//use react application as static
+app.use(express.static(__dirname + '/public'));
+
+app.use(session({ secret: 'ifyouwantitwemakeitsecret' , cookie: {maxAge: 60000 }, resave: false, saveUninitialized: false }));
+
+// routesm models and passport config
+
+require('./serverfiles/models/User');
+
+require('./serverfiles/passportconfig');
+
+require('./serverfiles/routes');
+
 
 //Handle errors
 
@@ -36,7 +52,12 @@ app.use(function(err, req, res, next) {
   }});
 });
 
+// db connection
 
+mongoose.connect(process.env.MONGO_URL3 ,{ useNewUrlParser: true}).then(()=>{
+  console.log('database connected');
+});
+mongoose.set('debug',true);
 
 //Set up server
 const port = process.env.NODE_ENV === 'production' ? 80 : process.env.PORT;
