@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import "../styles/layout.sass";
+import "../styles/navigation.sass";
 import Button from '@material-ui/core/Button';
 import { createMuiTheme, withStyles, makeStyles } from '@material-ui/core/styles';
 import red from '@material-ui/core/colors/red';
@@ -25,7 +26,7 @@ const ColorButtonPurple = withStyles(theme => ({
 var CustomNav = () => {
   return (
     <div className='navigation'>
-
+      <div className='nav--master-login'><Button  variant="outlined" color="secondary" size="small"> rock creator </Button> </div>
       <div className='nav'>
         <Link href='/homepage'>
           <ColorButtonPurple  style={linkStyle} variant="contained" color="primary">
