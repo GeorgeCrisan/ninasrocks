@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 import withLayout from './components/MasterLayout';
+import Typography from '@material-ui/core/Typography';
+import Container from '@material-ui/core/Container';
 
 var LoginPage = () => {
 
   return (
     <React.Fragment>
-      <div>
-        <p> Login form and etc </p>
-      </div>
+    <Container className='main-master' maxWidth="lg">
+
+    </Container>
     </React.Fragment>
   )
 }
