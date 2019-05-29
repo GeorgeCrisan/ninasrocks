@@ -28,7 +28,7 @@ var CustomNav = () => {
     <div className='navigation'>
       <div className='nav--master-login'><Button  variant="outlined" color="secondary" size="small"> rock creator </Button> </div>
       <div className='nav'>
-        <Link href='/homepage'>
+        <Link href='/'>
           <ColorButtonPurple  style={linkStyle} variant="contained" color="primary">
             Pile of rocks
           </ColorButtonPurple>
