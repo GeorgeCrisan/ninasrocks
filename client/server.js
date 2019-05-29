@@ -9,8 +9,15 @@ const passport = require('passport');
 const helmet = require('helmet');
 const session = require('express-session');
 const customErrors = require("./serverfiles/customErrors");
+const next = require('next');
+const dev = process.env.NODE_ENV !== 'production';
+const app = next({ dev });
+const handle = app.getRequestHandler();
 
-//Init app
+
+app.prepare().then(() => {
+
+  //Init app
 const app = express();
 
 //App Settings
@@ -23,10 +30,6 @@ app.use(require('method-override')());
 app.disable('x-powered-by');
 app.use(helmet());
 
-
-//use react application as static
-app.use(express.static(__dirname + '/public'));
-
 app.use(session({ secret: 'ifyouwantitwemakeitsecret' , cookie: {maxAge: 60000 }, resave: false, saveUninitialized: false }));
 // routesm models and passport config
 
@@ -35,6 +38,10 @@ require('./serverfiles/models/User');
 require('./serverfiles/passportconfig');
 
 app.use(require('./serverfiles/routes'));
+
+
+app.get('*', (req, res) => handle(req, res));
+
 //Handle errors
 
 /// catch 404 and forward to error handler
@@ -61,7 +68,11 @@ mongoose.connect(process.env.MONGO_URL3 ,{ useNewUrlParser: true}).then(()=>{
 mongoose.set('debug',true);
 
 //Set up server
-const port = process.env.NODE_ENV === 'production' ? 80 : process.env.PORT;
-const server = app.listen(port, ()=> { 
-  console.log(`Server running on port  ${port}` );
-});
+const port = process.env.NODE_ENV === 'production' ? process.env.PORT : 3000;
+
+
+  app.listen(port, (err) => {
+   if (err) throw err;
+   console.log(` on http://localhost:${port}`);
+  });
+ });

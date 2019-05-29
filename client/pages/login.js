@@ -8,7 +8,7 @@ var LoginPage = () => {
   return (
     <React.Fragment>
     <Container className='main-master' maxWidth="lg">
-
+    <div> No error </div>
     </Container>
     </React.Fragment>
   )

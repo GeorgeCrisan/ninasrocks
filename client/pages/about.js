@@ -8,7 +8,7 @@ class AboutPage extends Component {
   render() {
     return (
       <Container className='main-master' maxWidth="lg">
-
+        <div> Child no error</div>
       </Container>
     );
   }
