@@ -67,13 +67,13 @@ server.use(function(err, req, res, next) {
 mongoose.connect(process.env.MONGO_URL3 ,{ useNewUrlParser: true}).then(()=>{
   console.log('database connected');
 });
-mongoose.set('debug',true);
-
+mongoose.set('debug', true);
+mongoose.set('useCreateIndex', true);
 //Set up server
 const port = process.env.NODE_ENV === 'production' ? process.env.PORT : 3000;
 
 
-  app.listen(port, (err) => {
+server.listen(port, (err) => {
    if (err) throw err;
    console.log(` on http://localhost:${port}`);
   });

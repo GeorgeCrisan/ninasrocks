@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "next",
+    "dev": "node server.js -p $PORT",
     "build": "next build",
-    "start": "node server.js",
+    "start": "node server.js -p $PORT",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
