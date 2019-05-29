@@ -13,45 +13,47 @@ const next = require('next');
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
+const compression = require('compression');
 
 
 app.prepare().then(() => {
 
   //Init app
-const app = express();
+const server = express();
+server.use(compression());
 
 //App Settings
 require('dotenv').config();
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-app.use(cors()); 
-app.use(eventLog('dev')); 
-app.use(require('method-override')());
-app.disable('x-powered-by');
-app.use(helmet());
+server.use(bodyParser.urlencoded({ extended: false }));
+server.use(bodyParser.json());
+server.use(cors()); 
+server.use(eventLog('dev')); 
+server.use(require('method-override')());
+server.disable('x-powered-by');
+server.use(helmet());
 
-app.use(session({ secret: 'ifyouwantitwemakeitsecret' , cookie: {maxAge: 60000 }, resave: false, saveUninitialized: false }));
+server.use(session({ secret: 'ifyouwantitwemakeitsecret' , cookie: {maxAge: 60000 }, resave: false, saveUninitialized: false }));
 // routesm models and passport config
 
 require('./serverfiles/models/User');
 
 require('./serverfiles/passportconfig');
 
-app.use(require('./serverfiles/routes'));
+server.use(require('./serverfiles/routes'));
 
 
-app.get('*', (req, res) => handle(req, res));
+server.get('*', (req, res) => handle(req, res));
 
 //Handle errors
 
 /// catch 404 and forward to error handler
-app.use(function(req, res, next) {
+server.use(function(req, res, next) {
   var err = new Error('Sorry route Not Found');
   err.status = 404;
   next(err);
 });
 
-app.use(function(err, req, res, next) {
+server.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.json({'errors': {
     status: err.status || 500,
