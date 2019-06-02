@@ -1,47 +1,80 @@
 import React from 'react';
-import clx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
+import Divider from '@material-ui/core/Divider';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import OutlinedTextFields from './OutlinedTextFields.react.js';
+import Button from '@material-ui/core/Button';
 
 const drawerWidth = "100%";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   root: {
     display: "flex",
   },
-  appBar: {
-    transition: theme.transitions.create(['margin','width'],{
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    }),
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0,
   },
-  appBarShift: {
-
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    margin: "auto",
+    minWidth: 360
+  },
+  content: {
+    flexGrow: 1,
+    padding: 40,
+  },
+  button: {
+    height: 32,
+    fontSize: 14,
+    alignSelf: 'center'
   }
-}))
+}));
 
-function PersistentDrawerTop() {
+
+
+
+
+
+function PersistentDrawerTop(props) {
   const classes = useStyles();
-  const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  //const [openDrawer, setOpen] = React.useState();
+  const [values, setValues] = React.useState({
+      code: '',
+      date: new Date()
+  });
+  
+  const  textfieldprops = {
+    id: 'found-a-rock',
+    label: 'Insert Rock code',
+    placeholder: "Insert the code here ...",
+    variant: "outlined"
+  };
 
-  function toggleDrawer(){
-    setOpen(!open);
+  function submitThecode(e){
+    e.preventDefault();
+     console.log('promise code submited');
   }
 
-  return (
-    <div className={""}>
-    <button onClick={toggleDrawer}> open </button>
+  return (<div>
     <Drawer
     className={classes.drawer}
     variant="persistent"
     anchor="top"
-    open={open}
+    open={props.openDrawer}
     classes={{
       paper: classes.drawerPaper,
     }}
-      >55
+      >
+      <form onSubmit={(e)=>{e.preventDefault()}} className={classes.container} noValidate autoComplete="off">
+        <OutlinedTextFields textfieldprops={textfieldprops} values={values}  setValues={setValues} />
+        <Button type="button" onClick={submitThecode} size="small" variant="outlined" color="primary"  className={classes.button}>
+         Next
+      </Button>
+      </form>
+      
       </Drawer>
     </div>
   );
