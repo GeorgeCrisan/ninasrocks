@@ -16,6 +16,9 @@ const ColorButtonPurple = withStyles(() => ({
   root: {
     color: 'white',
     backgroundColor: deepPurple[500],
+    marginBottom: 10,
+    textAlign: "center",
+    maxWidth: 300,
     '&:hover': {
       backgroundColor: red[900],
     },
@@ -34,7 +37,7 @@ var CustomNav = () => {
       <div className='nav'>
         <Link href='/'>
           <ColorButtonPurple  style={linkStyle} variant="contained" color="primary">
-            Pile of rocks
+          The pile of rocks
           </ColorButtonPurple>
         </Link>
         

@@ -13,7 +13,7 @@ var LoginPage = () => {
 
   const validate = values => {
     const errors = {}
-    const requiredFields = [ 'firstName', 'lastName', 'email', 'favoriteColor', 'notes' ]
+    const requiredFields = [ values.type ];
     requiredFields.forEach(field => {
       if (!values[ field ]) {
         errors[ field ] = 'Required'
@@ -21,6 +21,10 @@ var LoginPage = () => {
     })
     if (values.email && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
       errors.email = 'Invalid email address'
+    }
+
+    if (values.password && values.password.length < 2) {
+      errors.password = 'Too short';
     }
     return errors
   }
@@ -31,22 +35,23 @@ var LoginPage = () => {
   });
 
   const [errors, setErrors] = React.useState({
-    errorEmail: false,
-    errorPassword: false
+    email: false,
+    password: false
   });
 
   let handleInputChange = name => (e) => {
     let setCredentialsValues = { ...credentials, [name]: e.target.value };
-    setCredentials(setCredentialsValues, () => {
-
-    });
-  }
+    setCredentials(setCredentialsValues);
+     if(name === 'email') {
+      let errors = validate({type: "email", email: e.target.value});
+      setErrors(errors);
+     } else if (name === 'password') {
+      let errors = validate({type: "password", password: e.target.value});
+      setErrors(errors);
+     }
+  };
   
   var executeLogin = () => {
-
-  };
-
-  let checkForError = name => () => {
 
   };
 
@@ -55,15 +60,16 @@ var LoginPage = () => {
     <React.Fragment>
       <Container className='main-master' maxWidth="lg">
           <Link href='/'>
-            <div className='nav--master-login'><Button variant="outlined" color="secondary" size="small"> Back to home page</Button> </div>
+            <div className='nav--master-login-admin'><Button variant="outlined" color="secondary" size="small"> Back to home page</Button> </div>
           </Link>
+          <div className='login-admin-status-panel'> Please log in with your email and password: </div>
           <form className={"login-admin"}>
             <FormControl required={true}>
               <TextField
-                onChange={handleInputChange}
-                error={errors.errorUsername}
+                onChange={handleInputChange('email')}
+                error={ errors && errors.email === 'Invalid email address' ? true: false }
                 id="outlined-email-input"
-                label="Email"
+                label={errors && errors.email === 'Invalid email address' ? 'Invalid email address format' : "Email"}
                 type="email"
                 name="email"
                 defaultValue={credentials.email}
@@ -73,10 +79,10 @@ var LoginPage = () => {
             </FormControl>
             <FormControl required={true}>
               <TextField
-                onChange={handleInputChange}
-                error={errors.errorPassword}
+                onChange={handleInputChange('password')}
+                error={  errors && errors.password === 'Too short' ? true: false }
                 id="standard-password-input"
-                label="Password"
+                label= {errors && errors.password === 'Too short' ? "Password too short" : "Password" }
                 defaultValue={credentials.password}
                 className={'textField'}
                 type="password"
