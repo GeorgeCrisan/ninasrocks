@@ -31,18 +31,22 @@ UserSchema.methods.generateJWT = function(){
     var exp = new Date(today);
     exp.setDate(today.getDate() + 60);
 
-    return jwt.sign({
+    var jwtts = jwt.sign({
         id: this._id,
         username: this.username,
-        exp: parseInt(exp.getTime() / 1000),
+        exp:Math.floor(Date.now() / 1000) + (60 * 60),
     }, secret);
+
+    return jwtts;
 };
 
 UserSchema.methods.toAuthJSON = function(){
+    console.log('from to json');
+    var token  =  this.generateJWT();
     return {
         username: this.username,
         email: this.email,
-        token: this.generateJWT(),
+        token: token,
         bio: this.bio,
         image: this.image,
         groupPermisions: this.groupPermisions
