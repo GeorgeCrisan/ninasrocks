@@ -53,7 +53,7 @@ router.post('/users/login', function(req, res, next){
   
       if(user){
         user.token = user.generateJWT();
-        res.cookie('ninasrocks-jt', user.token , { httpOnly: true, secure: true, username: user.username });
+        res.cookie('ninasrocks-jt', user.token , { httpOnly: true, secure: true });
         return res.json({user: user.toAuthJSON()});
       } else {
         return res.status(422).json(info);

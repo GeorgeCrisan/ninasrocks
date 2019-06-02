@@ -11,26 +11,44 @@ import './styles/admin.sass';
 
 var LoginPage = () => {
 
+  const validate = values => {
+    const errors = {}
+    const requiredFields = [ 'firstName', 'lastName', 'email', 'favoriteColor', 'notes' ]
+    requiredFields.forEach(field => {
+      if (!values[ field ]) {
+        errors[ field ] = 'Required'
+      }
+    })
+    if (values.email && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+      errors.email = 'Invalid email address'
+    }
+    return errors
+  }
+
   const [credentials, setCredentials] = React.useState({
-    username: '',
+    email: '',
     password: ''
   });
 
   const [errors, setErrors] = React.useState({
-    errorUsername: false,
+    errorEmail: false,
     errorPassword: false
   });
 
   let handleInputChange = name => (e) => {
     let setCredentialsValues = { ...credentials, [name]: e.target.value };
     setCredentials(setCredentialsValues, () => {
-      console.log('after set');
+
     });
   }
+  
+  var executeLogin = () => {
+
+  };
 
   let checkForError = name => () => {
 
-  }
+  };
 
 
   return (
@@ -44,9 +62,11 @@ var LoginPage = () => {
               <TextField
                 onChange={handleInputChange}
                 error={errors.errorUsername}
-                id="standard-username-import"
-                label="Username"
-                defaultValue={credentials.username}
+                id="outlined-email-input"
+                label="Email"
+                type="email"
+                name="email"
+                defaultValue={credentials.email}
                 className={'textField'}
                 margin="normal"
               />
@@ -65,7 +85,7 @@ var LoginPage = () => {
               />
             </FormControl>
             <FormControl required={true}>
-              <Button variant="outlined" color="primary" className={""}> Sign in </Button>
+              <Button variant="outlined" onClick={executeLogin} color="primary" className={""}> Sign in </Button>
             </FormControl>
           </form>
       </Container>
