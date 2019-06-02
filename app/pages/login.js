@@ -14,4 +14,4 @@ var LoginPage = () => {
   )
 }
 
-export default withLayout(LoginPage);
+export default withLayout(LoginPage);  //Login page with payout
