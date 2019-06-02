@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import { createMuiTheme, withStyles, makeStyles } from '@material-ui/core/styles';
 import red from '@material-ui/core/colors/red';
 import deepPurple from '@material-ui/core/colors/deepPurple';
-
+import PersistentDrawerTop from './PersistentDrawers.react';
 
 const linkStyle = {
   marginRight: 15,
@@ -26,6 +26,7 @@ const ColorButtonPurple = withStyles(theme => ({
 var CustomNav = () => {
   return (
     <div className='navigation'>
+      <PersistentDrawerTop />
       <div className='nav--master-login'><Button  variant="outlined" color="secondary" size="small"> rock creator </Button> </div>
       <div className='nav'>
         <Link href='/'>
