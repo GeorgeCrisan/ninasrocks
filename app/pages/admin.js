@@ -51,8 +51,13 @@ var LoginPage = () => {
      }
   };
   
-  var executeLogin = () => {
-
+  var executeLogin = async function() {
+    axios.post('/api/users/login', {
+      email: credentials.email,
+      password: credentials.password
+    }).then((response)=>{
+      console.log(response, 'what response man');
+    });
   };
 
 
