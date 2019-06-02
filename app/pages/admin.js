@@ -57,6 +57,7 @@ var LoginPage = () => {
       password: credentials.password
     }).then((response)=>{
       console.log(response, 'what response man');
+      console.log(document.cookie);
     });
   };
 
