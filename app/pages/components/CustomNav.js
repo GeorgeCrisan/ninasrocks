@@ -28,7 +28,7 @@ var CustomNav = () => {
   return (
     <div className='navigation'>
       <PersistentDrawerTop openDrawer={openDrawer}/>
-      <Link href='/login'>
+      <Link href='/admin'>
         <div className='nav--master-login'><Button  variant="outlined" color="secondary" size="small"> rock creator </Button> </div>
       </Link>
       <div className='nav'>
