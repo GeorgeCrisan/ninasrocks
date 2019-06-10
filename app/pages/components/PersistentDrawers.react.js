@@ -2,7 +2,6 @@ import React from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import Divider from '@material-ui/core/Divider';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import OutlinedTextFields from './OutlinedTextFields.react.js';
 import Button from '@material-ui/core/Button';
 
@@ -55,7 +54,6 @@ function PersistentDrawerTop(props) {
 
   function submitThecode(e){
     e.preventDefault();
-     console.log('promise code submited');
   }
 
   return (<div>

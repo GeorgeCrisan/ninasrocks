@@ -29,11 +29,14 @@ UserSchema.methods.validPassword = function(password){
 UserSchema.methods.generateJWT = function(){
     let today = new Date();
     var exp = new Date(today);
-    exp.setDate(today.getDate() + 60);
+    exp.setDate(today.getDate() + 120);
 
     var jwtts = jwt.sign({
         id: this._id,
         username: this.username,
+        email: this.email,
+        bio: this.bio,
+        image: this.image,
         exp:Math.floor(Date.now() / 1000) + (60 * 60),
     }, secret);
 
@@ -41,12 +44,11 @@ UserSchema.methods.generateJWT = function(){
 };
 
 UserSchema.methods.toAuthJSON = function(){
-    console.log('from to json');
-    var token  =  this.generateJWT();
+    //var token  =  this.generateJWT();
     return {
         username: this.username,
         email: this.email,
-        token: token,
+        //token: token,
         bio: this.bio,
         image: this.image,
         groupPermisions: this.groupPermisions

@@ -6,7 +6,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
-import withLayout from './components/MasterLayout';
 import './styles/admin.sass';
 
 var LoginPage = () => {
@@ -29,6 +28,13 @@ var LoginPage = () => {
     return errors
   }
 
+  React.useEffect(()=>{
+
+    axios.get('/api/users/login').then((data)=>{
+      setUserSession({ userdata: data.data });
+      });
+  },[]);
+
   const [credentials, setCredentials] = React.useState({
     email: '',
     password: ''
@@ -37,6 +43,12 @@ var LoginPage = () => {
   const [errors, setErrors] = React.useState({
     email: false,
     password: false
+  });
+
+  const [userSession, setUserSession] = React.useState({
+    username: '',
+    email: "",
+    groupPermisions: {}
   });
 
   let handleInputChange = name => (e) => {
@@ -57,14 +69,18 @@ var LoginPage = () => {
       password: credentials.password
     }).then((response)=>{
       console.log(response, 'what response man');
-      console.log(document.cookie);
+      response.data.user.access = true;
+      setUserSession(response.data.user);
+    }).catch((e)=>{
+      console.log(e);
+      setUserSession({access: false, message: 'User credentials refused, wrong password or email.'})
     });
   };
 
 
   return (
     <React.Fragment>
-      <Container className='main-master' maxWidth="lg">
+      {!userSession.access ? <Container className='main-master' maxWidth="lg">
           <Link href='/'>
             <div className='nav--master-login-admin'><Button variant="outlined" color="secondary" size="small"> Back to home page</Button> </div>
           </Link>
@@ -99,11 +115,14 @@ var LoginPage = () => {
             <FormControl required={true}>
               <Button variant="outlined" onClick={executeLogin} color="primary" className={""}> Sign in </Button>
             </FormControl>
-          </form>
-      </Container>
+          </form> 
+      </Container> : 
+      <Container className='main-master' maxWidth="lg">
+          Logged in: { userSession.username }
+      </Container> }
 
     </React.Fragment>
   )
 }
 
-export default LoginPage;  //Login page
+export default  LoginPage;  //Login page

@@ -2,13 +2,12 @@ var jwt = require('express-jwt');
 var secret = process.env.JWT_SECRET;
 
 
-function getTokenFromHeader(req){
-    console.log(req.headers ,'what are headers and check authorisation');
-    if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Token' ||
-        req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
-      return req.headers.authorization.split(' ')[1];
-    }
-  
+function getTokenFromCookie(req){
+    console.log(req.cookies["ninasrocks-jt"] ,'token if any');
+        let token = req.cookies["ninasrocks-jt"] || false;
+        if(token){
+          return token;
+        }
     return null;
   }
 
@@ -17,14 +16,14 @@ function getTokenFromHeader(req){
     required: jwt({
       secret: secret,
       userProperty: 'payload',
-      getToken: getTokenFromHeader
+      getToken: getTokenFromCookie
     }),
     optional: jwt({
       secret: secret,
       userProperty: 'payload',
       credentialsRequired: false,
-      getToken: getTokenFromHeader
+      getToken: getTokenFromCookie
     })
   };
   
-  module.exports = auth;
+  module.exports = auth; 
