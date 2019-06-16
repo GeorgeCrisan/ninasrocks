@@ -1,6 +1,6 @@
 import React from 'react';
 import Container from '@material-ui/core/Container';
-import Navigation from './components/CustomNav';
+import Navigation from '../CustomNav';
 
 const Index = () => {
   return (

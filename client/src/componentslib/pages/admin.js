@@ -1,14 +1,19 @@
-import React, { Component } from "react";
+import React from "react";
 import axios from 'axios';
 import Container from '@material-ui/core/Container';
-import Link from 'next/link';
-import { makeStyles } from '@material-ui/core/styles';
+import {Link} from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
-import './styles/admin.sass';
+import '../styles/admin.sass';
 
 var LoginPage = () => {
+
+  const [userSession, setUserSession] = React.useState({
+    username: '',
+    email: "",
+    groupPermisions: {}
+  });
 
   const validate = values => {
     const errors = {}
@@ -45,11 +50,7 @@ var LoginPage = () => {
     password: false
   });
 
-  const [userSession, setUserSession] = React.useState({
-    username: '',
-    email: "",
-    groupPermisions: {}
-  });
+  
 
   let handleInputChange = name => (e) => {
     let setCredentialsValues = { ...credentials, [name]: e.target.value };
@@ -81,7 +82,7 @@ var LoginPage = () => {
   return (
     <React.Fragment>
       {!userSession.access ? <Container className='main-master' maxWidth="lg">
-          <Link href='/'>
+          <Link to='/'>
             <div className='nav--master-login-admin'><Button variant="outlined" color="secondary" size="small"> Back to home page</Button> </div>
           </Link>
           <div className='login-admin-status-panel'> Please log in with your email and password: </div>
@@ -104,7 +105,7 @@ var LoginPage = () => {
                 onChange={handleInputChange('password')}
                 error={  errors && errors.password === 'Too short' ? true: false }
                 id="standard-password-input"
-                label= {errors && errors.password === 'Too short' ? "Password too short" : "Password" }
+                label={errors && errors.password === 'Too short' ? "Password too short" : "Password" }
                 defaultValue={credentials.password}
                 className={'textField'}
                 type="password"

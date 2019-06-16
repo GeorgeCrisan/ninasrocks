@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import Typography from '@material-ui/core/Typography';
+//import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import Navigation from './components/CustomNav';
+import Navigation from '../CustomNav';
 
 class AboutPage extends Component {
 
