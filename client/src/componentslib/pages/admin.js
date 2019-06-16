@@ -71,7 +71,6 @@ var LoginPage = () => {
       email: credentials.email,
       password: credentials.password
     }).then((response)=>{
-      console.log(response, 'what response man');
       response.data.user.access = true;
       setUserSession(response.data.user);
     }).catch((e)=>{
@@ -82,7 +81,6 @@ var LoginPage = () => {
 
   var executeLogout = function(){
       axios.get('/api/users/logout').then((response)=> {
-        console.log(response, 'response on logout');
         if(response.data.access === false) {
           setUserSession({ access: false, username: "" , password: ""});
         }

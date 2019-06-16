@@ -73,7 +73,6 @@ router.post('/users/login', auth.optional, function (req, res, next) {
 });
 
 router.get('/users/logout', function(req, res, next) {
-     console.log(req.cookies);
      res.cookie('ninasrocks-jt',"invalid" , { httpOnly: true, secure: false, signed: false, expires: new Date(Date.now()) });
      return res.json({ access: false });
 });
