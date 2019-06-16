@@ -36,13 +36,15 @@ var LoginPage = () => {
   React.useEffect(()=>{
 
     axios.get('/api/users/login').then((data)=>{
-      setUserSession({ userdata: data.data });
+      console.log(data, 'data on mount');
+      setUserSession({ ...data.data  });
       });
   },[]);
 
   const [credentials, setCredentials] = React.useState({
     email: '',
-    password: ''
+    password: '',
+    access: ""
   });
 
   const [errors, setErrors] = React.useState({
@@ -78,6 +80,14 @@ var LoginPage = () => {
     });
   };
 
+  var executeLogout = function(){
+      axios.get('/api/users/logout').then((response)=> {
+        console.log(response, 'response on logout');
+        if(response.data.access === false) {
+          setUserSession({ access: false, username: "" , password: ""});
+        }
+      });
+  }
 
   return (
     <React.Fragment>
@@ -119,7 +129,8 @@ var LoginPage = () => {
           </form> 
       </Container> : 
       <Container className='main-master' maxWidth="lg">
-          Logged in: { userSession.username }
+          Logged in as : { userSession.username }
+          <Button style={{position: "relative", left: 720 }} variant="outlined" onClick={executeLogout} color="secondary" className={""}> Sign Out </Button>
       </Container> }
 
     </React.Fragment>

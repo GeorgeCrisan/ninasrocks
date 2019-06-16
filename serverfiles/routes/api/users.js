@@ -39,9 +39,9 @@ router.put('/user', auth.required, function (req, res, next) {
   }).catch(next);
 });
 
-router.get('/users/login', auth.optional, function (req, res, next) {
+router.get('/users/login', auth.required, function (req, res, next) {
   if (req.payload) {
-    return res.json({ user: req.payload.username, access: true });
+    return res.json({ username: req.payload.username, access: true });
   } else {
     res.json({ access: false, message: 'Not authenticated' });
   }
@@ -70,6 +70,12 @@ router.post('/users/login', auth.optional, function (req, res, next) {
     }
   })(req, res, next);
 
+});
+
+router.get('/users/logout', function(req, res, next) {
+     console.log(req.cookies);
+     res.cookie('ninasrocks-jt',"invalid" , { httpOnly: true, secure: false, signed: false, expires: new Date(Date.now()) });
+     return res.json({ access: false });
 });
 
 router.post('/user/register', function (req, res, next) {
