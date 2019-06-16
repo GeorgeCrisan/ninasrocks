@@ -48,7 +48,7 @@ router.get('/users/login', auth.optional, function (req, res, next) {
 });
 
 
-router.post('/users/login', auth.required, function (req, res, next) {
+router.post('/users/login', auth.optional, function (req, res, next) {
 
   if (!req.body.email) {
     return res.status(422).json({ errors: { email: "can't be blank" } });

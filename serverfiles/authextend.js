@@ -8,7 +8,6 @@ function getTokenFromCookie(req){
         if(token){
           return token;
         }
-    return null;
   }
 
 
